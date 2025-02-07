@@ -5,9 +5,10 @@ import nltk
 from nltk.tokenize import word_tokenize
 import re
 import string
-
 import os
-import pickle
+
+# Initialize Flask app
+app = Flask(__name__)
 
 # Get the absolute path of the backend directory
 base_dir = os.path.abspath(os.path.dirname(__file__))
@@ -32,9 +33,6 @@ with open(model_path, "rb") as f:
 
 print("Vectorizer and Model loaded successfully.")
 
-# Initialize Flask app
-app = Flask(__name__)
-
 # Preprocessing function
 def preprocess_text(text):
     text = text.lower()
@@ -56,4 +54,5 @@ def classify_email():
     return jsonify({"classification": result})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Get port from environment variables
+    app.run(host="0.0.0.0", port=port, debug=True)
