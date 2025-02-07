@@ -7,15 +7,30 @@ import re
 import string
 
 import os
+import pickle
 
-base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory
+# Get the absolute path of the backend directory
+base_dir = os.path.abspath(os.path.dirname(__file__))
 
+# Define the paths to the model and vectorizer
 vectorizer_path = os.path.join(base_dir, "vectorizer.pkl")
+model_path = os.path.join(base_dir, "model.pkl")
 
-vectorizer = pickle.load(open(vectorizer_path, "rb"))
+# Check if files exist before loading
+if not os.path.exists(vectorizer_path):
+    raise FileNotFoundError(f"Vectorizer file not found: {vectorizer_path}")
+
+if not os.path.exists(model_path):
+    raise FileNotFoundError(f"Model file not found: {model_path}")
+
 # Load vectorizer and model
-# vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
-model = pickle.load(open("model.pkl", "rb"))
+with open(vectorizer_path, "rb") as f:
+    vectorizer = pickle.load(f)
+
+with open(model_path, "rb") as f:
+    model = pickle.load(f)
+
+print("Vectorizer and Model loaded successfully.")
 
 # Initialize Flask app
 app = Flask(__name__)
