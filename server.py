@@ -6,10 +6,16 @@ from nltk.tokenize import word_tokenize
 import re
 import string
 
-# Load vectorizer and model
-vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
-model = pickle.load(open("model.pkl", "rb"))
+import os
 
+base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the script's directory
+
+vectorizer_path = os.path.join(base_dir, "vectorizer.pkl")
+
+vectorizer = pickle.load(open(vectorizer_path, "rb"))
+# Load vectorizer and model
+# vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
+model = pickle.load(open("model.pkl", "rb"))
 # Initialize Flask app
 app = Flask(__name__)
 
