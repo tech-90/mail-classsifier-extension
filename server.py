@@ -15,7 +15,9 @@ vectorizer_path = os.path.join(base_dir, "vectorizer.pkl")
 vectorizer = pickle.load(open(vectorizer_path, "rb"))
 # Load vectorizer and model
 # vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
-model = pickle.load(open("model.pkl", "rb"))
+
+model_path = os.path.join(base_dir, "model.pkl")
+model = pickle.load(open(model_path, "rb"))
 # Initialize Flask app
 app = Flask(__name__)
 
