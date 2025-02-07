@@ -7,8 +7,15 @@ import re
 import string
 import os
 
+
 import nltk
-nltk.download('punkt')  # Ensure this runs in the deployed environment
+
+# Ensure the tokenizer resource is available
+try:
+    nltk.data.find("tokenizers/punkt")
+except LookupError:
+    nltk.download("punkt")  # Download missing tokenizer data
+
 
 # Initialize Flask app
 app = Flask(__name__)
