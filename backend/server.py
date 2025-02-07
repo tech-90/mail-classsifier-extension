@@ -7,6 +7,9 @@ import re
 import string
 import os
 
+import nltk
+nltk.download('punkt')  # Ensure this runs in the deployed environment
+
 # Initialize Flask app
 app = Flask(__name__)
 
