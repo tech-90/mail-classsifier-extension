@@ -17,21 +17,18 @@ base_dir = os.path.abspath(os.path.dirname(__file__))
 vectorizer_path = os.path.join(base_dir, "vectorizer.pkl")
 model_path = os.path.join(base_dir, "model.pkl")
 
-# Check if files exist before loading
-if not os.path.exists(vectorizer_path):
-    raise FileNotFoundError(f"Vectorizer file not found: {vectorizer_path}")
-
-if not os.path.exists(model_path):
-    raise FileNotFoundError(f"Model file not found: {model_path}")
-
 # Load vectorizer and model
-with open(vectorizer_path, "rb") as f:
-    vectorizer = pickle.load(f)
+try:
+    with open(vectorizer_path, "rb") as f:
+        vectorizer = pickle.load(f)
 
-with open(model_path, "rb") as f:
-    model = pickle.load(f)
+    with open(model_path, "rb") as f:
+        model = pickle.load(f)
 
-print("Vectorizer and Model loaded successfully.")
+    print("✅ Vectorizer and Model loaded successfully.")
+except FileNotFoundError as e:
+    print(f"❌ Error: {e}")
+    exit(1)
 
 # Preprocessing function
 def preprocess_text(text):
@@ -39,6 +36,11 @@ def preprocess_text(text):
     text = re.sub(f"[{string.punctuation}]", "", text)
     tokens = word_tokenize(text)
     return " ".join(tokens)
+
+# Root Route to Check Server Status
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"message": "🚀 Server is running!"}), 200
 
 # API Route for classification
 @app.route("/classify", methods=["POST"])
@@ -52,7 +54,6 @@ def classify_email():
     
     result = "spam" if prediction == 1 else "ham"
     return jsonify({"classification": result})
-
 
 # Use PORT from environment variables
 PORT = int(os.environ.get("PORT", 10000))  # Default 10000 if not set
