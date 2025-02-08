@@ -9,6 +9,13 @@ import os
 
 
 import nltk
+import nltk
+
+# Ensure required data is downloaded
+nltk.download("punkt")  
+nltk.download("stopwords")  
+nltk.download("wordnet")
+nltk.download("omw-1.4")
 
 # Ensure the tokenizer resource is available
 try:
