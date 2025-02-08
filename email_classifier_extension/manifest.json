@@ -1,20 +1,27 @@
+
 {
   "manifest_version": 3,
-  "name": "Gmail Spam Classifier",
+  "name": "Email Classifier",
   "version": "1.0",
-  "description": "Highlights spam emails in Gmail",
-  "permissions": ["storage", "activeTab", "scripting"],
-  "host_permissions": ["https://mail.google.com/*"],
+  "description": "Classify emails as Ham or Spam using AI.",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["https://mail-classsifier-extension-8.onrender.com/*"],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": ["https://mail.google.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "run_at": "document_idle"
     }
   ],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
   }
 }
